@@ -25,6 +25,7 @@ function startProg() {
 	var get_progress = 'run.php?wipe_drive='+document.getElementById('drive');
 	var stream = new EventSource(get_progress);
 	console.log('Stream Started');
+	document.getElementById('getProgress').hidden = false;
 	stream.onmessage = (e) => {
 		if (e.data === 'DONE'){
 			stream.close();
@@ -32,10 +33,11 @@ function startProg() {
 			setProgress = null;
 			document.getElementById('drive').disabled = false;
 			document.getElementById('start').disabled = false;
+			document.getElementById('getProgress').hidden = true;
 			return;
 		}
-		document.getElementById('getProgress').innerHTML = e.data;
-		document.getElementById('getProgress').scrollTop = document.getElementById('getProgress').scrollHeight;
+		document.getElementById('getProgress').value = e.data;
+		document.getElementById('getProgress').innerHTML = e.data + '%';
 	};
 }
 
